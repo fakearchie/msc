@@ -1,0 +1,94 @@
+# Logs
+logs/*.log
+*.log
+
+# Runtime data
+cache/
+queue/
+*.pid
+*.seed
+*.pid.lock
+
+# Docker volumes
+navidrome_data/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Downloads and temporary files
+downloads/
+temp/
+tmp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# Docker
+.dockerignore
+
+# Backup files
+*.backup
+*.bak
+backup-*
+*backup*
+
+# Music files (don't commit actual music)
+*.mp3
+*.m4a
+*.flac
+*.ogg
+*.wav
+
+# Certificate files
+*.pem
+*.key
+*.crt
+
+# Local configuration overrides
+config/local.env
+config/production.env

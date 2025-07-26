@@ -16,13 +16,13 @@
 # Update the system
 sudo apt update && sudo apt upgrade -y
 
-# Create project directory
-mkdir -p /home/pi/spotify-clone
+# Clone the project from GitHub
+git clone https://github.com/fakearchie/msc.git /home/pi/spotify-clone
 cd /home/pi/spotify-clone
 
-# Clone or download this project
-# (If you have this as a git repository)
-# git clone <repository-url> .
+# Alternative: Download as ZIP and extract
+# wget https://github.com/fakearchie/msc/archive/refs/heads/main.zip
+# unzip main.zip && mv msc-main /home/pi/spotify-clone
 ```
 
 ### 2. Run the Installation Script
