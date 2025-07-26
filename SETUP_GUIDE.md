@@ -8,6 +8,20 @@
 - Internet connection
 - SSH access (optional but recommended)
 
+## Quick Fix for Permission Issues
+
+If you're getting permission errors, run these commands first:
+
+```bash
+# Create music directory with proper permissions
+sudo mkdir -p /home/pi/music/{downloads,library}
+sudo chown -R pi:pi /home/pi/music
+sudo chmod -R 755 /home/pi/music
+
+# If you already ran the installer with sudo, fix ownership
+sudo chown -R pi:pi /home/pi/spotify-clone
+```
+
 ## Step-by-Step Installation
 
 ### 1. Initial System Setup
@@ -31,8 +45,11 @@ cd /home/pi/spotify-clone
 # Make the install script executable
 chmod +x scripts/install.sh
 
-# Run the installation
-sudo scripts/install.sh
+# Create music directory first (as pi user)
+mkdir -p /home/pi/music/{downloads,library}
+
+# Run the installation (as pi user, NOT sudo)
+./scripts/install.sh
 ```
 
 **Important:** Reboot after installation:

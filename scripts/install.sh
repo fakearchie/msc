@@ -65,12 +65,22 @@ sudo usermod -aG docker $USER
 
 # Create music directory structure
 print_status "Creating music directory structure..."
-mkdir -p /home/pi/music/{downloads,library}
-mkdir -p /home/pi/spotify-clone/{logs,config,web,scripts}
+mkdir -p /home/pi/music/{downloads,library} || {
+    print_warning "Music directory already exists or permission issue"
+}
+mkdir -p /home/pi/spotify-clone/{logs,config,web,scripts} || {
+    print_warning "Project directories already exist"
+}
 
 # Set proper permissions
-sudo chown -R pi:pi /home/pi/music
-sudo chmod -R 755 /home/pi/music
+if [ -d "/home/pi/music" ]; then
+    sudo chown -R pi:pi /home/pi/music 2>/dev/null || {
+        print_warning "Could not change ownership of music directory"
+    }
+    chmod -R 755 /home/pi/music 2>/dev/null || {
+        print_warning "Could not set permissions on music directory"
+    }
+fi
 
 # Create systemd service for automatic scanning
 print_status "Creating systemd services..."
