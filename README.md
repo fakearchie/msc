@@ -17,9 +17,18 @@ A complete, production-ready music streaming solution that automatically downloa
 
 ## 🚀 Quick Start
 
+### One-Command Installation
+
 ```bash
-# 1. Download the project
-git clone <this-repo> /home/pi/spotify-clone
+# On your Raspberry Pi (as pi user):
+curl -sSL https://raw.githubusercontent.com/fakearchie/msc/main/install.sh | bash
+```
+
+### Manual Installation
+
+```bash
+# 1. Clone the project
+git clone https://github.com/fakearchie/msc.git /home/pi/spotify-clone
 cd /home/pi/spotify-clone
 
 # 2. Install everything
