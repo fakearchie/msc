@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Queue - Music Downloader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 16px 16px 0 0;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .downloads-list {
+            background: white;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .download-item {
+            padding: 20px 30px;
+            border-bottom: 1px solid #e1e5e9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.2s ease;
+        }
+        
+        .download-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .download-item:last-child {
+            border-bottom: none;
+        }
+        
+        .download-info {
+            flex: 1;
+        }
+        
+        .download-id {
+            font-family: monospace;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .download-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .download-time {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .download-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-starting {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-downloading {
+            background: #cce5ff;
+            color: #004085;
+            animation: pulse-bg 2s infinite;
+        }
+        
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        @keyframes pulse-bg {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .progress-mini {
+            width: 60px;
+            height: 4px;
+            background: #e1e5e9;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-mini-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .empty-state p {
+            font-size: 16px;
+        }
+        
+        .navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 6px;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                padding: 0 10px;
+            }
+            
+            .header, .download-item {
+                padding: 20px;
+            }
+            
+            .download-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .download-status {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .stats {
+                gap: 10px;
+            }
+            
+            .stat-item {
+                min-width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stats">
+            {% set completed = downloads.values() | selectattr('status', 'equalto', 'completed') | list | length %}
+            {% set downloading = downloads.values() | selectattr('status', 'equalto', 'downloading') | list | length %}
+            {% set failed = downloads.values() | selectattr('status', 'equalto', 'error') | list | length %}
+            
+            <div class="stat-item">
+                <div class="stat-value">{{ downloads | length }}</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ completed }}</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ downloading }}</div>
+                <div class="stat-label">Active</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">{{ failed }}</div>
+                <div class="stat-label">Failed</div>
+            </div>
+        </div>
+        
+        <div class="header">
+            <h1>Download History</h1>
+            <p>Track all your music downloads</p>
+        </div>
+        
+        <div class="downloads-list">
+            {% if downloads %}
+                {% for download_id, download in downloads.items() %}
+                <div class="download-item">
+                    <div class="download-info">
+                        <div class="download-id">{{ download_id }}</div>
+                        <div class="download-message">{{ download.message }}</div>
+                        <div class="download-time">
+                            Started: {{ download.start_time }}
+                            {% if download.end_time %}
+                            | Completed: {{ download.end_time }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="download-status">
+                        <div class="status-badge status-{{ download.status }}">
+                            {{ download.status }}
+                        </div>
+                        
+                        {% if download.status == 'downloading' or download.status == 'completed' %}
+                        <div class="progress-mini">
+                            <div class="progress-mini-fill" style="width: {{ download.progress or 0 }}%"></div>
+                        </div>
+                        {% endif %}
+                        
+                        <a href="/status/{{ download_id }}" class="btn" style="font-size: 12px; padding: 6px 12px;">
+                            View
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <h3>No downloads yet</h3>
+                    <p>Start by downloading your first song!</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="navigation">
+            <a href="/" class="btn">New Download</a>
+            <a href="http://{{ request.host.split(':')[0] }}:4533" target="_blank" class="btn btn-secondary">Music Player</a>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-refresh for active downloads
+        function checkForActiveDownloads() {
+            const activeStatuses = ['starting', 'downloading'];
+            const downloadItems = document.querySelectorAll('.download-item');
+            let hasActive = false;
+            
+            downloadItems.forEach(item => {
+                const badge = item.querySelector('.status-badge');
+                if (badge) {
+                    const status = badge.textContent.trim();
+                    if (activeStatuses.includes(status)) {
+                        hasActive = true;
+                    }
+                }
+            });
+            
+            return hasActive;
+        }
+        
+        // Refresh page if there are active downloads
+        if (checkForActiveDownloads()) {
+            setTimeout(() => {
+                location.reload();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
