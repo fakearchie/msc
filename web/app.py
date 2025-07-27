@@ -114,10 +114,17 @@ def download_music(url, download_id):
         download_status[download_id]['end_time'] = datetime.now().isoformat()
         logger.error(f"Download error: {url} (ID: {download_id}) - {str(e)}")
 
+@app.route('/dashboard')
+def dashboard():
+    """Unified dashboard page"""
+    return render_template('dashboard.html')
+
 @app.route('/')
 def index():
     """Main page with download form"""
-    return render_template('index.html')
+    # Pre-fill URL if provided as query parameter
+    url = request.args.get('url', '')
+    return render_template('index.html', prefill_url=url)
 
 @app.route('/download', methods=['POST'])
 def start_download():
