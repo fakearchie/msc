@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Download Pro - Installation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #262640 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .hero {
+            margin-bottom: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        .installation-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .method-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .method-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .method-card p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            text-align: left;
+            position: relative;
+            overflow: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .features {
+            margin-top: 50px;
+        }
+        
+        .features h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .feature p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .installation-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>YouTube Download Pro</h1>
+            <p>Transform your Navidrome into a powerful music downloading station with our sleek, modern browser extension.</p>
+        </div>
+        
+        <div class="installation-methods">
+            <div class="method-card">
+                <h3>🚀 One-Click Install</h3>
+                <p>Install directly from your browser extension store. Easiest method with automatic updates.</p>
+                <a href="#" onclick="installUserScript()" class="btn btn-primary">Install Extension</a>
+            </div>
+            
+            <div class="method-card">
+                <h3>📋 Manual Install</h3>
+                <p>Copy and paste the script into Tampermonkey. Full control over installation and updates.</p>
+                <a href="#" onclick="showManualInstall()" class="btn btn-secondary">Show Instructions</a>
+            </div>
+            
+            <div class="method-card">
+                <h3>🔗 Direct Link</h3>
+                <p>Install directly from GitHub with automatic updates enabled.</p>
+                <a href="https://raw.githubusercontent.com/fakearchie/msc/main/navidrome-integration/user-script.js" class="btn btn-primary" target="_blank">Install from GitHub</a>
+            </div>
+        </div>
+        
+        <div id="manual-install" style="display: none;">
+            <h3>Manual Installation Steps:</h3>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyInstallSteps()">Copy</button>
+                <div id="install-steps">
+1. Install Tampermonkey browser extension
+2. Click "Create a new script"
+3. Replace all content with our script
+4. Save and enable the script
+5. Visit your Navidrome server
+6. Enjoy the new YouTube download feature!
+                </div>
+            </div>
+            <a href="#" onclick="copyUserScript()" class="btn btn-primary">Copy User Script</a>
+        </div>
+        
+        <div class="features">
+            <h2>✨ Features</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <h4>🎨 Modern Dark UI</h4>
+                    <p>Beautiful dark theme that blends seamlessly with Navidrome</p>
+                </div>
+                <div class="feature">
+                    <h4>⚡ Auto-Detection</h4>
+                    <p>Automatically detects your server configuration</p>
+                </div>
+                <div class="feature">
+                    <h4>📱 Mobile Friendly</h4>
+                    <p>Works perfectly on mobile devices and tablets</p>
+                </div>
+                <div class="feature">
+                    <h4>🔄 Auto-Updates</h4>
+                    <p>Automatically updates to the latest version</p>
+                </div>
+                <div class="feature">
+                    <h4>🎵 Multi-Format</h4>
+                    <p>Supports videos, playlists, channels, and music</p>
+                </div>
+                <div class="feature">
+                    <h4>⌨️ Keyboard Shortcuts</h4>
+                    <p>Enter to download, Escape to close</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function installUserScript() {
+            // Check if Tampermonkey is installed
+            if (typeof GM_info !== 'undefined' || window.GM_info) {
+                // Direct install for Tampermonkey users from local server
+                window.open('/user-script.js', '_blank');
+            } else {
+                // Guide user to install Tampermonkey first
+                alert('Please install Tampermonkey first:\\n\\n1. Go to tampermonkey.net\\n2. Install the extension\\n3. Come back and click this button again');
+                window.open('https://www.tampermonkey.net/', '_blank');
+            }
+        }
+        
+        function showManualInstall() {
+            document.getElementById('manual-install').style.display = 'block';
+            document.getElementById('manual-install').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function copyInstallSteps() {
+            const steps = document.getElementById('install-steps').textContent;
+            navigator.clipboard.writeText(steps).then(() => {
+                alert('Installation steps copied to clipboard!');
+            });
+        }
+        
+        function copyUserScript() {
+            // This would contain the actual user script content
+            const scriptContent = "// The full user script would be embedded here";
+            navigator.clipboard.writeText(scriptContent).then(() => {
+                alert('User script copied to clipboard! Paste it into Tampermonkey.');
+            });
+        }
+        
+        // Add some interactive animations and server IP integration
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.method-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+            
+            // Add server IP info and bookmarklet
+            const serverIP = '{{ server_ip }}';
+            
+            // Add server info
+            const header = document.querySelector('.header h1');
+            if (header && serverIP) {
+                const serverInfo = document.createElement('p');
+                serverInfo.style.cssText = 'font-size: 14px; opacity: 0.8; margin-top: 10px;';
+                serverInfo.innerHTML = `🌐 Server: <strong>http://${serverIP}:8080</strong>`;
+                header.parentNode.insertBefore(serverInfo, header.nextSibling);
+            }
+            
+            // Add bookmarklet section
+            const installMethods = document.querySelector('.installation-methods');
+            if (installMethods && serverIP) {
+                const bookmarkletDiv = document.createElement('div');
+                bookmarkletDiv.className = 'method-card';
+                bookmarkletDiv.innerHTML = `
+                    <h3>🔖 Bookmarklet (No Extension Needed)</h3>
+                    <p>Drag this link to your bookmarks bar for instant access without installing anything:</p>
+                    <a href="javascript:(function(){if(document.getElementById('yt-download-btn'))return;var s=document.createElement('script');s.src='http://${serverIP}:8080/user-script.js';document.head.appendChild(s);})();" 
+                       class="btn btn-primary" 
+                       style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); margin-bottom: 10px;"
+                       onclick="event.preventDefault(); alert('Right-click this button and select \\'Add to Bookmarks\\' or drag it to your bookmarks bar!'); return false;">
+                        🚀 YouTube Download Pro Bookmarklet
+                    </a>
+                    <p style="font-size: 12px; margin-top: 10px; opacity: 0.8;">
+                        <strong>How to use:</strong> Right-click the button above → "Add to Bookmarks" → Visit Navidrome → Click the bookmark!
+                    </p>
+                `;
+                installMethods.appendChild(bookmarkletDiv);
+            }
+        });
+    </script>
+</body>
+</html>

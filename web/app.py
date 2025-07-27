@@ -114,6 +114,68 @@ def download_music(url, download_id):
         download_status[download_id]['end_time'] = datetime.now().isoformat()
         logger.error(f"Download error: {url} (ID: {download_id}) - {str(e)}")
 
+@app.route('/install-extension')
+def install_extension():
+    """Browser extension installation page"""
+    # Auto-detect server IP
+    import socket
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    
+    # Try to get actual network IP if local IP is localhost
+    if local_ip.startswith('127.'):
+        import subprocess
+        try:
+            # For Linux/Pi
+            result = subprocess.run(['hostname', '-I'], capture_output=True, text=True)
+            if result.returncode == 0:
+                local_ip = result.stdout.strip().split()[0]
+        except:
+            pass
+    
+    return render_template('install-extension.html', server_ip=local_ip)
+
+@app.route('/user-script.js')
+def user_script():
+    """Serve the user script directly with auto-configured IP"""
+    try:
+        script_path = os.path.join(os.path.dirname(__file__), '..', 'navidrome-integration', 'user-script.js')
+        with open(script_path, 'r', encoding='utf-8') as f:
+            script_content = f.read()
+        
+        # Auto-detect server IP and update the script
+        import socket
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+        
+        # Try to get actual network IP if local IP is localhost
+        if local_ip.startswith('127.'):
+            import subprocess
+            try:
+                # For Linux/Pi
+                result = subprocess.run(['hostname', '-I'], capture_output=True, text=True)
+                if result.returncode == 0:
+                    local_ip = result.stdout.strip().split()[0]
+            except:
+                pass
+        
+        # Replace placeholder with actual IP in the script
+        script_content = script_content.replace('YOUR_PI_IP', local_ip)
+        script_content = script_content.replace('http://localhost', f'http://{local_ip}')
+        
+        response = app.response_class(
+            response=script_content,
+            status=200,
+            mimetype='application/javascript'
+        )
+        response.headers['Content-Disposition'] = 'attachment; filename=navidrome-youtube-pro.user.js'
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        return response
+    except FileNotFoundError:
+        return "User script not found", 404
+
 @app.route('/dashboard')
 def dashboard():
     """Unified dashboard page"""

@@ -1,52 +1,47 @@
-# 🎵 Self-Hosted Spotify Alternative for Raspberry Pi 5
+# 🎵 YouTube Download Pro - Modern Music Server
 
-A complete, production-ready music streaming solution that automatically downloads music from YouTube and serves it via Navidrome. Transform your Raspberry Pi into a powerful personal music server with Spotify-like features!
+> **Transform your Raspberry Pi into a professional music streaming server with beautiful YouTube integration**
 
-## ✨ Features
+![Version](https://img.shields.io/badge/version-2.0-blue)
+![Platform](https://img.shields.io/badge/platform-Raspberry%20Pi-red)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-- 🎵 **Automatic YouTube Downloads** - Monitor playlists and download new music automatically
-- 📱 **Mobile-Friendly Interface** - Beautiful web UI optimized for all devices
-- 🔄 **Smart Library Management** - Automatic scanning, organization, and metadata embedding
-- 👥 **Multi-User Support** - Create accounts with download permissions (like Spotify Premium)
-- 📱 **Mobile App Compatible** - Works with DSub, Substreamer, Play:Sub, and more
-- 🌐 **Web Download Interface** - Simple form to paste YouTube links and download instantly
-- ⚡ **Pi 5 Optimized** - Efficient resource usage, perfect for 8GB RAM Pi 5
-- 🔧 **Production Ready** - Health monitoring, logging, automated maintenance
-- 🔒 **Secure** - Built-in rate limiting, authentication, and security headers
-- 📊 **Monitoring & Analytics** - Track downloads, system health, and usage
+## ✨ What's New in v2.0
 
-## 🚀 Quick Start
+### � **Completely Redesigned Interface**
+- **Modern Dark Theme** with gradient backgrounds and glass-morphism effects
+- **Smooth Animations** and professional transitions
+- **Mobile-Responsive** design that works perfectly on phones and tablets
+- **Smart Notifications** with beautiful icons and color-coded messages
 
-### One-Command Installation
+### � **Enhanced Installation Experience**
+- **One-Click Installation** - No more manual setup every time!
+- **Auto-Update System** - Updates automatically from GitHub
+- **Multiple Installation Methods** - Choose what works best for you
+- **Server IP Auto-Detection** - No manual configuration needed
 
+### 🔧 **Powerful New Features**
+- **Auto-Paste from Clipboard** - Detects and auto-fills YouTube URLs
+- **Keyboard Shortcuts** - Enter to download, Escape to close
+- **Dashboard Integration** - Quick access to your music dashboard
+- **Bookmarklet Option** - Works without browser extensions
+- **Enhanced Error Handling** - Better feedback and recovery
+
+---
+
+## 🎯 Quick Start (3 Steps)
+
+### **Step 1: Deploy to Your Pi**
 ```bash
-# On your Raspberry Pi (as pi user):
-curl -sSL https://raw.githubusercontent.com/fakearchie/msc/main/install.sh | bash
+# One-command setup with auto-updates
+curl -sSL https://raw.githubusercontent.com/fakearchie/msc/main/scripts/setup-pro.sh | bash
 ```
 
-### Manual Installation
+### **Step 2: Install Browser Extension**
+Visit: `http://YOUR_PI_IP:8080/install-extension` and click "Install Extension"
 
-```bash
-# 1. Clone the project
-git clone https://github.com/fakearchie/msc.git /home/pi/spotify-clone
-cd /home/pi/spotify-clone
-
-# 2. Install everything
-sudo ./scripts/install.sh
-
-# 3. Reboot (important!)
-sudo reboot
-
-# 4. Configure and start
-nano config/config.env  # Change passwords and settings
-./scripts/music-server.sh start
-
-# 5. Access your server
-# Music Player: http://your-pi-ip:4533
-# Downloads: http://your-pi-ip:8080
-```
-
-**That's it!** Your personal Spotify alternative is ready! 🎉
+### **Step 3: Start Downloading**
+Go to your Navidrome → Click the floating YouTube button → Paste URLs → Enjoy! �
 
 ## 📱 Mobile Apps & Access
 
