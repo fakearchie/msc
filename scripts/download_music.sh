@@ -40,6 +40,14 @@ download_url() {
     # Audio format and quality
     cmd="$cmd --extract-audio --audio-format $AUDIO_FORMAT --audio-quality $AUDIO_QUALITY"
     
+    # Enhanced metadata extraction
+    cmd="$cmd --embed-metadata --embed-subs --embed-thumbnail --add-metadata"
+    cmd="$cmd --parse-metadata 'title:%(title)s' --parse-metadata 'uploader:%(artist)s'"
+    cmd="$cmd --write-info-json --write-description --write-annotations"
+    
+    # Better filename formatting
+    cmd="$cmd --restrict-filenames --no-overwrites"
+    
     # Output template based on folder structure
     case "$FOLDER_STRUCTURE" in
         "artist/album")
@@ -171,6 +179,16 @@ organize_files() {
     # Set proper permissions
     find "$source_dir" -type f -exec chmod 644 {} \;
     find "$source_dir" -type d -exec chmod 755 {} \;
+    
+    # Enhance metadata if enabled
+    if [ "$AUTO_TAG_MUSIC" = "true" ]; then
+        log "Enhancing metadata with external APIs..."
+        if command -v python3 > /dev/null; then
+            python3 "$(dirname "$0")/enhance_metadata.py" "$source_dir" || log "Metadata enhancement failed"
+        else
+            log "Python3 not found, skipping metadata enhancement"
+        fi
+    fi
     
     log "File organization completed"
 }

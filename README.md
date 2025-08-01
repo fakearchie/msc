@@ -1,10 +1,95 @@
-# 🎵 YouTube Download Pro - Modern Music Server
+# 🎵 Music Server
 
-> **Transform your Raspberry Pi into a professional music streaming server with beautiful YouTube integration**
+Self-hosted music streaming server with YouTube playlist integration for Raspberry Pi.
 
-![Version](https://img.shields.io/badge/version-2.0-blue)
-![Platform](https://img.shields.io/badge/platform-Raspberry%20Pi-red)
-![License](https://img.shields.io/badge/license-MIT-green)
+## ✨ Features
+
+- **YouTube Integration** - Download music from videos and playlists
+- **Mobile Apps** - Works with Subsonic apps (Play:Sub, DSub)
+- **Smart Playlists** - Auto-sync with YouTube playlists
+- **Web Interface** - Easy downloads and management
+
+## 🚀 Quick Install
+
+```bash
+# 1. Clone and setup
+git clone https://github.com/fakearchie/msc.git
+cd msc
+sudo ./install.sh
+
+# 2. Start services
+docker-compose up -d
+
+# 3. Access interfaces
+# Music Player: http://your-pi-ip:4533
+# Downloads: http://your-pi-ip:8080
+```
+
+## ⚙️ Configuration
+
+Edit `config/config.env`:
+
+```bash
+# Playlist to monitor (auto-download new songs)
+MONITOR_PLAYLISTS="https://www.youtube.com/playlist?list=YOUR_PLAYLIST_ID"
+
+# Check for new songs every hour
+PLAYLIST_CHECK_INTERVAL=60
+
+# Audio quality
+AUDIO_QUALITY=best
+AUDIO_FORMAT=mp3
+```
+
+## 📱 Mobile Setup
+
+**iOS**: Download [Play:Sub](https://apps.apple.com/app/play-sub/id955329386) ($4.99)
+**Android**: Download [DSub](https://play.google.com/store/apps/details?id=github.daneren2005.dsub) (Free)
+
+**Server Settings**:
+- Server: `http://your-pi-ip:4533`
+- Username: `admin` 
+- Password: Check `config/config.env`
+
+## 📥 Download Music
+
+**Web Interface**: Go to `http://your-pi-ip:8080`
+
+**Command Line**:
+```bash
+# Single video
+./scripts/download_music.sh "https://www.youtube.com/watch?v=VIDEO_ID"
+
+# Playlist
+./scripts/download_music.sh "https://www.youtube.com/playlist?list=PLAYLIST_ID"
+```
+
+## 🛠️ Management
+
+```bash
+# Check status
+docker ps
+
+# View logs
+docker-compose logs
+
+# Restart services
+docker-compose restart
+
+# Clean up
+./scripts/cleanup.sh
+```
+
+## 📋 Requirements
+
+- Raspberry Pi 4/5 (4GB+ RAM)
+- Raspberry Pi OS
+- Docker & Docker Compose
+- 32GB+ SD Card
+
+---
+
+**Default Login**: Username: `admin` | Password: Check `config/config.env`
 
 ## ✨ What's New in v2.0
 

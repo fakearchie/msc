@@ -15,7 +15,9 @@ WORKDIR /app
 
 # Copy requirements first for better caching
 COPY requirements.txt .
+COPY ../requirements-metadata.txt ./requirements-metadata.txt
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-metadata.txt
 
 # Copy application code
 COPY . .

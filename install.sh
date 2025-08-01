@@ -1,23 +1,56 @@
 #!/bin/bash
 
-# One-Command Installer for Raspberry Pi Music Server
-# curl -sSL https://raw.githubusercontent.com/fakearchie/msc/main/install.sh | bash
+# Music Server Installation Script
+# Simple installation for Raspberry Pi
 
 set -e
 
-# Color codes for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+echo "🎵 Installing Music Server..."
 
-# Function to print colored output
-print_status() {
-    echo -e "${GREEN}[INFO]${NC} $1"
-}
+# Update system
+echo "📦 Updating system packages..."
+sudo apt update && sudo apt upgrade -y
 
-print_warning() {
+# Install Docker and dependencies
+echo "🔧 Installing Docker..."
+sudo apt install -y docker.io docker-compose python3-pip git curl
+
+# Start Docker service
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+
+# Create music directory
+mkdir -p /home/pi/music
+sudo chown -R $USER:$USER /home/pi/music
+
+# Setup configuration
+if [ ! -f "config/config.env" ]; then
+    echo "📋 Creating config file..."
+    cp config/config.env.example config/config.env
+fi
+
+# Make scripts executable
+chmod +x scripts/*.sh
+
+# Start services
+echo "🚀 Starting services..."
+docker-compose up -d
+
+# Get IP address
+PI_IP=$(hostname -I | awk '{print $1}')
+
+echo ""
+echo "✅ Installation complete!"
+echo ""
+echo "🌐 Access at:"
+echo "   Music Player: http://$PI_IP:4533"
+echo "   Downloads:    http://$PI_IP:8080"
+echo ""
+echo "📱 Mobile Apps: Play:Sub (iOS), DSub (Android)"
+echo "🔑 Login: admin / check config/config.env"
+echo ""
+echo "⚠️  Logout and login again to activate Docker permissions"
     echo -e "${YELLOW}[WARNING]${NC} $1"
 }
 

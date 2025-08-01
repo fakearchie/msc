@@ -73,7 +73,7 @@ services:
     container_name: music_proxy
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8081:80"
     volumes:
       - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./web/static:/usr/share/nginx/html:ro
