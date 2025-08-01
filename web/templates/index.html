@@ -3,238 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Downloader</title>
+    <title>🎵 Music Server - YouTube Downloader</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
-        
-        .container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-        
-        .header p {
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .flash-messages {
-            margin-bottom: 20px;
-        }
-        
-        .flash-message {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .flash-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .flash-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .navigation {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .navigation a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 500;
-        }
-        
-        .navigation a:hover {
-            text-decoration: underline;
-        }
-        
-        .examples {
-            margin-top: 20px;
-            padding: 16px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .examples h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        
-        .examples ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .examples li {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 24px;
-                margin: 10px;
-            }
-            
-            .header h1 {
-                font-size: 24px;
-            }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🎵 Music Downloader</h1>
-            <p>Download your favorite music from YouTube</p>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-4">
+                <i class="fas fa-music mr-3"></i>Music Server
+            </h1>
+            <p class="text-blue-100 text-lg">Professional YouTube Music Downloader</p>
         </div>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message flash-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+
+        <!-- Main Panel -->
+        <div class="glass-effect rounded-2xl p-8 mb-6">
+            <form id="downloadForm" class="space-y-6">
+                <!-- URL Input -->
+                <div>
+                    <label class="block text-white font-semibold mb-3">
+                        <i class="fab fa-youtube mr-2"></i>YouTube URL or Playlist
+                    </label>
+                    <div class="relative">
+                        <input type="url" 
+                               id="urlInput" 
+                               placeholder="Paste YouTube URL or playlist link here..."
+                               class="w-full p-4 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all">
+                        <button type="button" 
+                                onclick="pasteFromClipboard()"
+                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-200 hover:text-white transition-colors">
+                            <i class="fas fa-paste"></i>
+                        </button>
+                    </div>
                 </div>
-            {% endif %}
-        {% endwith %}
-        
-        <form method="POST" action="/download">
-            <div class="form-group">
-                <label for="url">YouTube URL</label>
-                <input 
-                    type="url" 
-                    id="url" 
-                    name="url" 
-                    placeholder="https://www.youtube.com/watch?v=..." 
-                    required
-                    autocomplete="off"
-                    value="{{ prefill_url or '' }}"
-                >
-            </div>
-            
-            <button type="submit" class="btn">
-                Download Music
-            </button>
-        </form>
-        
-        <div class="examples">
-            <h3>Supported URLs:</h3>
-            <ul>
-                <li>• YouTube videos (individual songs)</li>
-                <li>• YouTube playlists (entire albums/collections)</li>
-                <li>• YouTube Music links</li>
-                <li>• Short YouTube URLs (youtu.be)</li>
-            </ul>
+
+                <!-- Download Options -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white font-semibold mb-2">Audio Quality</label>
+                        <select id="quality" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="best">Best Quality</option>
+                            <option value="320">320 kbps</option>
+                            <option value="192">192 kbps</option>
+                            <option value="128">128 kbps</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-white font-semibold mb-2">Audio Format</label>
+                        <select id="format" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="mp3">MP3</option>
+                            <option value="m4a">M4A</option>
+                            <option value="flac">FLAC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Playlist Options -->
+                <div id="playlistOptions" class="hidden">
+                    <div class="bg-blue-500/20 rounded-lg p-4 border border-blue-400/30">
+                        <h3 class="text-white font-semibold mb-3">
+                            <i class="fas fa-list-ul mr-2"></i>Playlist Options
+                        </h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" id="createPlaylist" class="mr-3 rounded">
+                                Create Navidrome playlist
+                            </label>
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" id="monitorPlaylist" class="mr-3 rounded">
+                                Monitor for new songs (auto-download updates)
+                            </label>
+                            <div class="hidden" id="playlistNameGroup">
+                                <input type="text" 
+                                       id="playlistName" 
+                                       placeholder="Playlist name..."
+                                       class="w-full p-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Button -->
+                <button type="submit" 
+                        id="downloadBtn"
+                        class="w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:from-green-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+                    <i class="fas fa-download mr-3"></i>Start Download
+                </button>
+            </form>
         </div>
-        
-        <div class="navigation">
-            <a href="/queue">View Downloads</a>
-            <a href="http://{{ request.host.split(':')[0] }}:4533" target="_blank">Music Player</a>
+
+        <!-- Progress Panel -->
+        <div id="progressPanel" class="glass-effect rounded-2xl p-6 mb-6 hidden">
+            <h3 class="text-white font-bold text-xl mb-4">
+                <i class="fas fa-spinner fa-spin mr-2"></i>Download Progress
+            </h3>
+            <div class="space-y-4">
+                <div class="bg-white/20 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span id="progressText" class="text-white font-semibold">Initializing...</span>
+                        <span id="progressPercent" class="text-blue-200">0%</span>
+                    </div>
+                    <div class="w-full bg-white/20 rounded-full h-3">
+                        <div id="progressBar" class="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div id="downloadStatus" class="text-blue-100"></div>
+            </div>
+        </div>
+
+        <!-- Live Logs -->
+        <div class="glass-effect rounded-2xl p-6 mb-6">
+            <h3 class="text-white font-bold text-xl mb-4 flex items-center justify-between">
+                <span><i class="fas fa-terminal mr-2"></i>Live Logs</span>
+                <button onclick="clearLogs()" class="text-sm bg-red-500/20 hover:bg-red-500/40 px-3 py-1 rounded-lg transition-colors">
+                    <i class="fas fa-trash mr-1"></i>Clear
+                </button>
+            </h3>
+            <div id="logContainer" class="bg-black/30 rounded-lg p-4 h-48 overflow-y-auto font-mono text-sm text-green-300">
+                <div class="text-blue-300">🎵 Music Server Ready - Waiting for downloads...</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid md:grid-cols-3 gap-4">
+            <a href="http://{{ request.host.split(':')[0] }}:4533" target="_blank" 
+               class="glass-effect rounded-xl p-6 text-center hover:bg-white/20 transition-all transform hover:scale-105">
+                <i class="fas fa-music text-3xl text-blue-300 mb-3"></i>
+                <h3 class="text-white font-bold">Music Player</h3>
+                <p class="text-blue-200 text-sm">Open Navidrome</p>
+            </a>
+            
+            <button onclick="checkForUpdates()" 
+                    class="glass-effect rounded-xl p-6 text-center hover:bg-white/20 transition-all transform hover:scale-105">
+                <i class="fas fa-sync-alt text-3xl text-green-300 mb-3"></i>
+                <h3 class="text-white font-bold">Check Updates</h3>
+                <p class="text-blue-200 text-sm">Auto-update system</p>
+            </button>
+            
+            <button onclick="showStats()" 
+                    class="glass-effect rounded-xl p-6 text-center hover:bg-white/20 transition-all transform hover:scale-105">
+                <i class="fas fa-chart-bar text-3xl text-purple-300 mb-3"></i>
+                <h3 class="text-white font-bold">Statistics</h3>
+                <p class="text-blue-200 text-sm">Download stats</p>
+            </button>
         </div>
     </div>
-    
+
+    <!-- JavaScript -->
     <script>
-        // Auto-focus the URL input
-        document.getElementById('url').focus();
-        
-        // Simple URL validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const url = document.getElementById('url').value;
-            const isYouTube = /^https?:\/\/(www\.)?(youtube\.com|youtu\.be|music\.youtube\.com)/.test(url);
+        let currentDownloadId = null;
+
+        // Auto-paste from clipboard
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text.includes('youtube.com') || text.includes('youtu.be')) {
+                    document.getElementById('urlInput').value = text;
+                    checkForPlaylist();
+                }
+            } catch (err) {
+                console.log('Clipboard access denied');
+            }
+        }
+
+        // Check if URL is a playlist
+        function checkForPlaylist() {
+            const url = document.getElementById('urlInput').value;
+            const playlistOptions = document.getElementById('playlistOptions');
             
-            if (!isYouTube) {
-                e.preventDefault();
-                alert('Please enter a valid YouTube URL');
-                return false;
+            if (url.includes('playlist?list=')) {
+                playlistOptions.classList.remove('hidden');
+                document.getElementById('createPlaylist').checked = true;
+                showPlaylistNameInput();
+            } else {
+                playlistOptions.classList.add('hidden');
+            }
+        }
+
+        // Show playlist name input
+        function showPlaylistNameInput() {
+            const createPlaylist = document.getElementById('createPlaylist');
+            const playlistNameGroup = document.getElementById('playlistNameGroup');
+            
+            if (createPlaylist.checked) {
+                playlistNameGroup.classList.remove('hidden');
+            } else {
+                playlistNameGroup.classList.add('hidden');
+            }
+        }
+
+        // Add event listeners
+        document.getElementById('urlInput').addEventListener('input', checkForPlaylist);
+        document.getElementById('createPlaylist').addEventListener('change', showPlaylistNameInput);
+
+        // Handle form submission
+        document.getElementById('downloadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                addLog('❌ Please enter a YouTube URL', 'error');
+                return;
+            }
+            
+            const formData = {
+                url: url,
+                quality: document.getElementById('quality').value,
+                format: document.getElementById('format').value,
+                createPlaylist: document.getElementById('createPlaylist').checked,
+                monitorPlaylist: document.getElementById('monitorPlaylist').checked,
+                playlistName: document.getElementById('playlistName').value
+            };
+            
+            try {
+                showProgress();
+                addLog(`🚀 Starting download: ${url}`, 'info');
+                
+                const response = await fetch('/download', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentDownloadId = result.download_id;
+                    addLog(`✅ Download started (ID: ${result.download_id})`, 'success');
+                    pollProgress(result.download_id);
+                } else {
+                    addLog(`❌ Error: ${result.error}`, 'error');
+                    hideProgress();
+                }
+            } catch (error) {
+                addLog(`❌ Network error: ${error.message}`, 'error');
+                hideProgress();
+            }
+        });
+
+        // Progress tracking
+        function showProgress() {
+            document.getElementById('progressPanel').classList.remove('hidden');
+            document.getElementById('downloadBtn').disabled = true;
+            document.getElementById('downloadBtn').innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Downloading...';
+        }
+
+        function hideProgress() {
+            document.getElementById('progressPanel').classList.add('hidden');
+            document.getElementById('downloadBtn').disabled = false;
+            document.getElementById('downloadBtn').innerHTML = '<i class="fas fa-download mr-3"></i>Start Download';
+        }
+
+        function updateProgress(data) {
+            document.getElementById('progressText').textContent = data.message;
+            document.getElementById('progressPercent').textContent = data.progress + '%';
+            document.getElementById('progressBar').style.width = data.progress + '%';
+            document.getElementById('downloadStatus').textContent = `Status: ${data.status}`;
+        }
+
+        async function pollProgress(downloadId) {
+            try {
+                const response = await fetch(`/status/${downloadId}`);
+                const data = await response.json();
+                
+                updateProgress(data);
+                addLog(`📊 ${data.message} (${data.progress}%)`, 'info');
+                
+                if (data.status === 'completed') {
+                    addLog('🎉 Download completed successfully!', 'success');
+                    hideProgress();
+                } else if (data.status === 'error') {
+                    addLog(`❌ Download failed: ${data.message}`, 'error');
+                    hideProgress();
+                } else {
+                    setTimeout(() => pollProgress(downloadId), 2000);
+                }
+            } catch (error) {
+                addLog(`❌ Progress check failed: ${error.message}`, 'error');
+                hideProgress();
+            }
+        }
+
+        // Logging system
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: 'text-blue-300',
+                success: 'text-green-300',
+                error: 'text-red-300',
+                warning: 'text-yellow-300'
+            };
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = `${colors[type]} mb-1`;
+            logEntry.innerHTML = `<span class="text-gray-400">[${timestamp}]</span> ${message}`;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function clearLogs() {
+            document.getElementById('logContainer').innerHTML = '<div class="text-blue-300">🎵 Music Server Ready - Logs cleared...</div>';
+        }
+
+        // Update checker
+        async function checkForUpdates() {
+            addLog('🔄 Checking for updates...', 'info');
+            try {
+                const response = await fetch('/check-updates');
+                const result = await response.json();
+                
+                if (result.update_available) {
+                    addLog('🎉 Update found! Installing...', 'success');
+                    setTimeout(() => {
+                        addLog('🔄 Services restarting...', 'info');
+                        setTimeout(() => location.reload(), 5000);
+                    }, 3000);
+                } else {
+                    addLog('✅ System is up to date', 'success');
+                }
+            } catch (error) {
+                addLog(`❌ Update check failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Statistics
+        function showStats() {
+            addLog('📊 Loading statistics...', 'info');
+            // Implement stats display
+        }
+
+        // Auto-check for updates on startup
+        window.addEventListener('load', function() {
+            addLog('🎵 Music Server Interface Loaded', 'success');
+            setTimeout(checkForUpdates, 2000);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                document.getElementById('downloadForm').dispatchEvent(new Event('submit'));
             }
         });
     </script>

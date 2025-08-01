@@ -51,12 +51,6 @@ echo "📱 Mobile Apps: Play:Sub (iOS), DSub (Android)"
 echo "🔑 Login: admin / check config/config.env"
 echo ""
 echo "⚠️  Logout and login again to activate Docker permissions"
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
 
 print_header() {
     echo -e "${BLUE}$1${NC}"
